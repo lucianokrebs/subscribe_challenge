@@ -8,6 +8,15 @@ RSpec.describe SalesTax::Receipt do
   end
 
   describe '#to_s' do
+    it 'handles an empty basket' do
+      receipt = described_class.new(items: [], tax_calculator: tax_calculator)
+
+      expect(receipt.to_s).to eq(
+        "Sales Taxes: 0.00\n" \
+        "Total: 0.00"
+      )
+    end
+
     it 'formats a single exempt item with zero tax' do
       items = [item(quantity: 1, name: 'chocolate bar', price: 0.85)]
       receipt = described_class.new(items: items, tax_calculator: tax_calculator)

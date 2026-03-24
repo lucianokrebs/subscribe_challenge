@@ -35,6 +35,14 @@ RSpec.describe SalesTax::Item do
     end
   end
 
+  context 'when item is both imported and exempt' do
+    it 'reports both correctly' do
+      item = described_class.new(quantity: 1, name: 'imported box of chocolates', price: 10.00)
+      expect(item.imported?).to be true
+      expect(item.exempt?).to be true
+    end
+  end
+
   describe 'immutability' do
     it 'is frozen after creation' do
       item = described_class.new(quantity: 1, name: 'book', price: 12.49)

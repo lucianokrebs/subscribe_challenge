@@ -34,6 +34,14 @@ RSpec.describe SalesTax::InputParser do
       expect(items.first.name).to eq('imported bottle of perfume')
     end
 
+    it 'parses quantity greater than 1' do
+      items = parser.parse('3 imported boxes of chocolates at 11.25')
+
+      expect(items.first.quantity).to eq(3)
+      expect(items.first.name).to eq('imported boxes of chocolates')
+      expect(items.first.price).to eq(11.25)
+    end
+
     it 'ignores blank lines' do
       input = "1 book at 12.49\n\n1 music CD at 14.99\n"
 
