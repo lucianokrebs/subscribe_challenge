@@ -54,6 +54,10 @@ responsibility:
 
 `main.rb` is a thin entry point that wires the four classes together.
 
+All objects are either immutable (`Item` is frozen after creation) or stateless (`TaxCalculator`,
+`InputParser`), and `Receipt` is created per-use. This makes the application inherently thread-safe
+with no shared mutable state.
+
 ## Tax Rules
 
 | Rule | Rate | Applies to | Exemptions |
@@ -83,3 +87,7 @@ responsibility:
 - **Exempt category detection**: Exemption is determined by keyword matching on item names
   (e.g., "book", "chocolate", "pill"). This is a simplification suitable for the given test
   data -- a production system would use a product catalog or category mapping.
+
+- **Floating-point arithmetic**: Prices are represented as floats for simplicity. This produces
+  correct results for all provided test data. For production financial calculations, `BigDecimal`
+  would be preferred to avoid floating-point precision issues.
